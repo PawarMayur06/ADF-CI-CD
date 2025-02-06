@@ -59,17 +59,17 @@ jobs:
           
       - name: Clean install dependencies
         run: npm ci
-        working-directory: ${{github.workspace}}/ADFroot/build
+        working-directory: ${{github.workspace}}/adf
 
 ########################################### VALIDATING AND DEPLOYING THE ARM TEMPLATES ##############################################################
         
       - name: Validate
-        run: npm run build validate ${{github.workspace}}/ADFroot/ /subscriptions/737d1672-96a9-4ba4-b12c-8027ef27ab4e/resourceGroups/rg-shruti/providers/Microsoft.DataFactory/factories/adf-shir-shruti
-        working-directory: ${{github.workspace}}/ADFroot/build
+        run: npm run build validate ${{github.workspace}}/ /subscriptions/${{ secrets.SUBSCRIPTION_ID}}/resourceGroups/${{ env.rg-name}}/providers/Microsoft.DataFactory/factories/${{ env.adf-name}}
+        working-directory: ${{github.workspace}}/adf
         
       - name: Validate and Generate ARM template
-        run: npm run build export ${{github.workspace}}/ADFroot/ /subscriptions/737d1672-96a9-4ba4-b12c-8027ef27ab4e/resourceGroups/rg-shruti/providers/Microsoft.DataFactory/factories/adf-shir-shruti "ExportedArmTemplate"
-        working-directory: ${{github.workspace}}/ADFroot/build
+        run: npm run build export ${{github.workspace}}/ /subscriptions/${{ secrets.SUBSCRIPTION_ID}}/resourceGroups/${{ env.rg-name}}/providers/Microsoft.DataFactory/factories/${{ env.adf-name}} "ExportedArmTemplate"
+        working-directory: ${{github.workspace}}/adf
 
 ############################################## PUSING CHANGES TO REPO AND UPLOADING ARTIFACTS ########################################################
         
@@ -77,7 +77,7 @@ jobs:
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
-          find ${{github.workspace}}/ADFroot -name "*.json" -o -name "*.ps1" | while read file; do git add "$file"; done
+          find ${{github.workspace}}/adf -name "*.json" -o -name "*.ps1" | while read file; do git add "$file"; done
           git commit -m "Update ARM templates [skip ci]" || echo "No changes to commit"
           git push origin main || echo "No changes to push"
         env:
@@ -87,7 +87,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: ExportedArmTemplate
-          path: ${{github.workspace}}/ADFroot/build/ExportedArmTemplate/      
+          path: ${{github.workspace}}/adf/ExportedArmTemplate/      
 
 ##################################################################### RELEASE STAGE #####################################################################
   

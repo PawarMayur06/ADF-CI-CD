@@ -19,7 +19,7 @@ jobs:
 ############################################################# BUILD STAGE ###############################################################################
 
   build:
-    runs-on: runs-on: SHR-VM
+    runs-on: SHR-VM
     environment: DEV
     steps:
     
@@ -93,7 +93,7 @@ jobs:
   
   release:
     needs: build
-    runs-on: runs-on: SHR-VM
+    runs-on: SHR-VM
     environment: PROD
     steps:
 

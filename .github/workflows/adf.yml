@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 
 env:
-  rg-name: "mayur-rg"
+  rg-name: "mayurr-rg"
   adf-name: "mayur-dev-adf-poc"
   target-adf: "mayur-prod-adf-poc"
 

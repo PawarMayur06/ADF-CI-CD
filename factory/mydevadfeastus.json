@@ -1,4 +1,12 @@
 {
 	"name": "mydevadfeastus",
+	"properties": {
+		"globalParameters": {
+			"name": {
+				"type": "string",
+				"value": "mayurr"
+			}
+		}
+	},
 	"location": "eastus"
 }
